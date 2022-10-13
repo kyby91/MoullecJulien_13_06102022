@@ -7,16 +7,15 @@ import Banner from "./components/banner";
 import Footer from './components/footer';
 import Signin from "./views/signin";
 import User from "./views/user";
-import Test from "./views/test";
 import './index.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import { Provider } from 'react-redux';
-// import store from './redux'
+import { Provider } from 'react-redux';
+import store from './redux'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
+    <Provider store={store}>
       <Router>
         <Banner/>
         <Routes>
@@ -26,7 +25,7 @@ root.render(
         </Routes>
         <Footer/>
       </Router>
-    {/* </Provider> */}
+    </Provider>
   </React.StrictMode>
 );
 
