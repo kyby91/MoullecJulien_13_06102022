@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
-
 import * as userActions from "../features/user";
 import { useDispatch } from "react-redux";
+import {fetchAPI} from "../features/user";
 
 function Signin() {
 
@@ -16,11 +16,15 @@ function Signin() {
 
     const handleLogin = (e) => {
         e.preventDefault();
+
         const payload = {
             email : userEmail,
             password : userPassword
         }
-        dispatch(userActions.login(payload))
+        dispatch(userActions.fetchAPILogin(payload))
+
+
+        
         // axios.post('http://localhost:3001/api/v1/user/login', payload)
         //   .then((res) => {
         //     console.log(res.data);
