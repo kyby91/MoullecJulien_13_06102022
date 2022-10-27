@@ -1,17 +1,19 @@
 import { useState } from "react";
-import axios from "axios";
+import { useNavigate } from 'react-router-dom'
 import * as userActions from "../features/user";
-import { useDispatch } from "react-redux";
-import {fetchAPI} from "../features/user";
+import { useDispatch, useSelector } from "react-redux";
 
 function Signin() {
 
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+    const navigate = useNavigate()
+
 
     // console.log(userEmail, userPassword);
 
     const dispatch = useDispatch()
+    const ok = useSelector((state) =>state.user.token);
 
 
     const handleLogin = (e) => {
@@ -22,25 +24,9 @@ function Signin() {
             password : userPassword
         }
         dispatch(userActions.fetchAPILogin(payload))
-
-
-        
-        // axios.post('http://localhost:3001/api/v1/user/login', payload)
-        //   .then((res) => {
-        //     console.log(res.data);
-
-        //     // if (res.data.errors) {
-        //     //     console.log('error');
-        //     // } else {
-        //     //   window.location = "/user";
-        //     // }
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        // });
-    };
-
-
+        navigate('/user')
+    }
+    
     return (
         <div>
             <main className="main bg-dark">

@@ -2,74 +2,42 @@ import {configureStore, createSlice} from '@reduxjs/toolkit'
 // import { useEffect } from 'react';
 import axios from "axios";
 
-const fetchAPI = async (data, state)=>{
-  const dataReponse = await axios.post('http://localhost:3001/api/v1/user/login', data)
 
-  // axios.post('http://localhost:3001/api/v1/user/login', data)
-  // .then((res) => {
-    console.log(dataReponse.data,  dataReponse.data.body.token);
-  //   // return state.user.token = res.data.body.token
-  //   // console.log(state.user)
-  //   // return state
-  //   // if (res.data.errors) {
-  //   //     console.log('error');
-  //   // } else {
-  //   //   window.location = "/user";
-  //   // }
-    return dataReponse.data.body.token
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // })
-}
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         statut : true,
+        loggedIn: false,
         user: {
-            name : null,
-            fisrtName : null,
+            lastName : null,
+            firstName : null,
             token : null
         }
     },
     reducers: {
         login: (state, action) =>{
           console.log(action)
-          // const token = fetchAPI(action.payload , state);
-          // console.log(token)
-          // if(token){
-          //   state.user.token = token
-          // }
-         
-          
-          //   axios.post('http://localhost:3001/api/v1/user/login', action.payload)
-          // .then((res) => {
-          //   console.log(res.data,  res.data.body.token);
-            // return state.user.token = res.data.body.token
-            // console.log(state.user)
-            // return state
-            // if (res.data.errors) {
+          state.user.token = action.payload
+          state.user.statut = false
+          state.user.loggedIn = true
+            // if (!action.payload) {
             //     console.log('error');
             // } else {
             //   window.location = "/user";
             // }
-            // const token = res.data.body.token
-            // return data
-            state.user.token = action.payload
-            state.user.statut = false
-          // })
-          // .catch((err) => {
-          //   console.log(err);
-          // })
+            
         },
-        //Login (state, action)
-            //FETCH / AXIOS
-                //TOKEN
-        // logout: (state, action)=>{
-        //   state.user.token = null
-        // }
+        editProfile:(state, action) =>{
+          console.log(action.payload)
+          state.user.firstName = action.payload.firstName
+          state.user.lastName = action.payload.lastName
+        },
+        logout: (state, action)=>{
+          state.user.token = null
+        }
         //EditProfil
+
         //ShowProfil
         // addUser: (state, action)=>{},
         // changeFirstName: (state, action)=>{},
@@ -78,15 +46,11 @@ const userSlice = createSlice({
 })
 
 
-// const store = configureStore ({
-//     reducer:{
-//         user: userSlice.reducer
-//     }
-// })
+
 
 const {actions , reducer} = userSlice
 
-export  const { login } = actions;
+export  const { login, editProfile } = actions;
 
 export default userSlice;
 
@@ -115,9 +79,29 @@ export function fetchAPILogin(data){
   } 
 }
 
-// {firstName: 'Tony',
-//         lastName: 'Stark',
-//         email: 'tony@stark.com',
-//         password: 'password123',
-//         loggedIn:'false'
-//     }
+export function fetchAPIUserProfile(token){
+  return async (dispatch, getState ) => {
+    // const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzViZTc2ZGU3MTZjMjMwYzdjNjgzOSIsImlhdCI6MTY2Njg3NTY4NSwiZXhwIjoxNjY2OTYyMDg1fQ.9jj0K3y45jPd7AWjMvrM-JIhjLEVlMudS3_R8xc0vts'
+    try {
+     
+      const config = {
+        headers: {
+          'Authorization' : `Bearer ${token}`,
+        },
+      }
+      const dataUser = await axios.post('http://localhost:3001/api/v1/user/profile', {}, config)
+
+      const payload = {
+        firstName : dataUser.data.body.firstName,
+        lastName : dataUser.data.body.lastName
+      }
+  
+      console.log(dataUser);
+      dispatch(editProfile(payload)) 
+    
+    } catch (error) {
+      console.log(error);
+    }
+
+  } 
+}
