@@ -19,8 +19,8 @@ const userSlice = createSlice({
         login: (state, action) =>{
           console.log(action)
           state.user.token = action.payload
-          state.user.statut = false
-          state.user.loggedIn = true
+          state.statut = false
+          state.loggedIn = true
             // if (!action.payload) {
             //     console.log('error');
             // } else {
@@ -35,8 +35,13 @@ const userSlice = createSlice({
         },
         logout: (state, action)=>{
           state.user.token = null
+          state.statut = true
+          state.loggedIn = false
+        },
+        changeName:(state, action) =>{
+          state.user.firstName = action.payload.firstName
+          state.user.lastName = action.payload.lastName
         }
-        //EditProfil
 
         //ShowProfil
         // addUser: (state, action)=>{},
@@ -50,7 +55,7 @@ const userSlice = createSlice({
 
 const {actions , reducer} = userSlice
 
-export  const { login, editProfile } = actions;
+export  const { login, editProfile, logout, changeName } = actions;
 
 export default userSlice;
 
@@ -81,7 +86,7 @@ export function fetchAPILogin(data){
 
 export function fetchAPIUserProfile(token){
   return async (dispatch, getState ) => {
-    // const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzViZTc2ZGU3MTZjMjMwYzdjNjgzOSIsImlhdCI6MTY2Njg3NTY4NSwiZXhwIjoxNjY2OTYyMDg1fQ.9jj0K3y45jPd7AWjMvrM-JIhjLEVlMudS3_R8xc0vts'
+    
     try {
      
       const config = {
@@ -104,4 +109,31 @@ export function fetchAPIUserProfile(token){
     }
 
   } 
+}
+
+export function logOut(dispatch){
+  const payload = ''
+  dispatch(logout(payload))
+}
+
+export function updateUserProfile(token, data){
+  return async (dispatch) =>{
+    const config = {
+      headers: {
+        'Authorization' : `Bearer ${token}`,
+      },
+    }
+
+    //Recupere le payload
+    const data = {
+      firstName: "Bruce",
+      lastName: "Wayne"
+    }
+
+
+    const response = await axios.put('http://localhost:3001/api/v1/user/profile', data, config)
+    console.log(response);
+
+    //Dispatche editProfil (paylaod)
+  }
 }
