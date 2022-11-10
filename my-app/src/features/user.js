@@ -116,7 +116,8 @@ export function logOut(dispatch){
   dispatch(logout(payload))
 }
 
-export function updateUserProfile(token, data){
+export function updateUserProfile(token, payload){
+  console.log(payload.firstName, 'ok');
   return async (dispatch) =>{
     const config = {
       headers: {
@@ -125,13 +126,13 @@ export function updateUserProfile(token, data){
     }
 
     //Recupere le payload
-    const data = {
-      firstName: "Bruce",
-      lastName: "Wayne"
-    }
+    // const data = {
+    //   firstName: "Bruce",
+    //   lastName: "Wayne"
+    // }
+    
 
-
-    const response = await axios.put('http://localhost:3001/api/v1/user/profile', data, config)
+    const response = await axios.put('http://localhost:3001/api/v1/user/profile', payload, config)
     console.log(response);
 
     //Dispatche editProfil (paylaod)
