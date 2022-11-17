@@ -34,7 +34,7 @@ function User() {
             "firstName": newName,
             "lastName": newLastName
         }
-        dispatch(userActions.changeName(payload))
+        // dispatch(userActions.changeName(payload))
         dispatch(userActions.updateUserProfile(token, payload))
         setIsShown(current => !current);
     }
@@ -57,7 +57,7 @@ function User() {
                 <h2 className="sr-only">Accounts</h2>
                 <Account/>
             </main>
-            <section className="sign-in-content new-name" style={{display: isShown ? 'block' : 'none'}}>
+            <section className="sign-in-content" id="new-name" style={{display: isShown ? 'block' : 'none'}}>
                     <i className="fa fa-user-circle sign-in-icon"></i>
                     <h1>Edit Name</h1>
                     <form >

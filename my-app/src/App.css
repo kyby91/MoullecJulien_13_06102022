@@ -177,10 +177,12 @@ body {
   margin-top: 3rem;
 }
 
-.new-name{
+#new-name{
   position: absolute;
-  top: 3%;
-  right: 43%;
+  top: 3.5%;
+  right: 41%;
+  width: 400px;
+  border: solid rgb(50, 218, 101);
 }
 
 .sign-in-icon {

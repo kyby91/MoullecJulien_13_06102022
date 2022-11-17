@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import * as userActions from "../features/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function Signin() {
 
@@ -13,7 +13,6 @@ function Signin() {
     // console.log(userEmail, userPassword);
 
     const dispatch = useDispatch()
-    const ok = useSelector((state) =>state.user.token);
 
 
     const handleLogin = (e) => {

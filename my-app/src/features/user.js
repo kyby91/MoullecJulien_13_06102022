@@ -1,4 +1,4 @@
-import {configureStore, createSlice} from '@reduxjs/toolkit'
+import { createSlice} from '@reduxjs/toolkit'
 // import { useEffect } from 'react';
 import axios from "axios";
 
@@ -20,13 +20,7 @@ const userSlice = createSlice({
           console.log(action)
           state.user.token = action.payload
           state.statut = false
-          state.loggedIn = true
-            // if (!action.payload) {
-            //     console.log('error');
-            // } else {
-            //   window.location = "/user";
-            // }
-            
+          state.loggedIn = true            
         },
         editProfile:(state, action) =>{
           console.log(action.payload)
@@ -53,7 +47,7 @@ const userSlice = createSlice({
 
 
 
-const {actions , reducer} = userSlice
+const {actions } = userSlice
 
 export  const { login, editProfile, logout, changeName } = actions;
 
@@ -134,7 +128,7 @@ export function updateUserProfile(token, payload){
 
     const response = await axios.put('http://localhost:3001/api/v1/user/profile', payload, config)
     console.log(response);
-
+    dispatch(changeName(payload))
     //Dispatche editProfil (paylaod)
   }
 }
