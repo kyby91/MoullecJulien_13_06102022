@@ -1,5 +1,4 @@
 import { createSlice} from '@reduxjs/toolkit'
-// import { useEffect } from 'react';
 import axios from "axios";
 
 
@@ -36,11 +35,6 @@ const userSlice = createSlice({
           state.user.firstName = action.payload.firstName
           state.user.lastName = action.payload.lastName
         }
-
-        //ShowProfil
-        // addUser: (state, action)=>{},
-        // changeFirstName: (state, action)=>{},
-        // changeLastName: (state, action)=>{}
     }
 })
 
@@ -119,16 +113,8 @@ export function updateUserProfile(token, payload){
       },
     }
 
-    //Recupere le payload
-    // const data = {
-    //   firstName: "Bruce",
-    //   lastName: "Wayne"
-    // }
-    
-
     const response = await axios.put('http://localhost:3001/api/v1/user/profile', payload, config)
     console.log(response);
     dispatch(changeName(payload))
-    //Dispatche editProfil (paylaod)
   }
 }
