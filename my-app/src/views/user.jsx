@@ -3,6 +3,8 @@ import * as userActions from "../features/user";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'
+
 
 
 function User() {
@@ -12,16 +14,18 @@ function User() {
     const {token, firstName, lastName} = useSelector((state) => state.user.user);
 
     console.log(firstName,lastName)
-    
+    const navigate = useNavigate()
+
 
     // dispatch(userActions.fetchAPIUserProfile(token))
     useEffect( () => {
         console.log(token)
         if(token){
             dispatch(userActions.fetchAPIUserProfile(token))
+        }else {
+        //    navigate('/') 
         }
 
-        //Si pas token -> page login
         
     }, [token])
 
