@@ -23,10 +23,8 @@ function User() {
         if(token){
             dispatch(userActions.fetchAPIUserProfile(token))
         }else {
-        //    navigate('/') 
+           navigate('/') 
         }
-
-        
     }, [token])
 
     const [newName, setnewName] = useState('');

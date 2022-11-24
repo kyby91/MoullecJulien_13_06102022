@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import * as userActions from "../features/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function Signin() {
 
@@ -9,8 +10,20 @@ function Signin() {
     const [userPassword, setUserPassword] = useState('');
     const navigate = useNavigate()
 
+    // Recupere token dans le state
+
+    // useEffect()
+    //Si il y a le token navgete ver user
+     // 
 
     // console.log(userEmail, userPassword);
+    const {token} = useSelector((state) => state.user.user);
+
+    useEffect( () => {  
+        if(token){
+            navigate('/user')
+        }
+    })
 
     const dispatch = useDispatch()
 
@@ -23,7 +36,6 @@ function Signin() {
             password : userPassword
         }
         dispatch(userActions.fetchAPILogin(payload))
-        navigate('/user')
     }
     
     return (

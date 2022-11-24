@@ -81,15 +81,20 @@ paths:
           schema:
             type: integer
             format: int64
-        
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          explode: true
+          schema:
+            enum:
+              - Authorization -Attach Bearer JWT token
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/Transactions'          
             application/xml:
               schema:
@@ -116,6 +121,14 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          explode: true
+          schema:
+            enum:
+              - Authorization -Attach Bearer JWT token
       requestBody:
         description: Update an existent transaction in the account
         content:
@@ -155,16 +168,14 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: name
-          in: query
-          description: Name of transaction that needs to be updated
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          explode: true
           schema:
-            type: string
-        - name: status
-          in: query
-          description: Status of transaction that needs to be updated
-          schema:
-            type: string
+            enum:
+              - Authorization -Attach Bearer JWT token
       responses:
         '405':
           description: Invalid input
@@ -179,19 +190,21 @@ paths:
       description: Delete an information of a transaction
       operationId: deleteInfoTransaction
       parameters:
-        - name: api_key
-          in: header
-          description: ''
-          required: false
-          schema:
-            type: string
         - name: transactionId
           in: path
-          description: Pet id to delete
+          description: ID of transaction that needs to be updated
           required: true
           schema:
             type: integer
             format: int64
+        - name: Authorization
+          in: header
+          description: Attach Bearer JWT token
+          required: true
+          explode: true
+          schema:
+            enum:
+              - Authorization -Attach Bearer JWT token
       responses:
         '400':
           description: Invalid pet value
