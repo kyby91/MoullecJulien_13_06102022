@@ -1,29 +1,8 @@
 openapi: 3.0.3
 info:
-  title: Swagger Petstore - OpenAPI 3.0
-  description: |-
-    This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
-    Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
-    You can now help us improve the API whether it's by making changes to the definition itself or to the code.
-    That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
-
-    _If you're looking for the Swagger 2.0/OAS 2.0 version of Petstore, then click [here](https://editor.swagger.io/?url=https://petstore.swagger.io/v2/swagger.yaml). Alternatively, you can load via the `Edit > Load Petstore OAS 2.0` menu option!_
-    
-    Some useful links:
-    - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
-    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
-  termsOfService: http://swagger.io/terms/
-  contact:
-    email: apiteam@swagger.io
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Swagger Transaction - OpenAPI 3.0
   version: 1.0.11
-externalDocs:
-  description: Find out more about Swagger
-  url: http://swagger.io
-servers:
-  - url: https://petstore3.swagger.io/api/v3
+
 tags:
   - name: transaction
     description: Everything about your transaction
@@ -35,8 +14,8 @@ paths:
     get:
       tags:
         - transaction
-      summary: Finds transaction by token
-      description: API for transactions
+      summary: Find transaction by token
+      description: Find all the transaction corresponding to one token
       operationId: findTransactionByToken
       parameters:
         - name: Authorization
@@ -55,14 +34,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Transactions'          
-            application/xml:
-              schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/Transactions'
         '400':
-          description: Invalid status value
+          description: Invalid token supplied
+        '500':
+          description: Internal Server Error
       security:
         - petstore_auth:
             - write:pets
@@ -71,8 +47,8 @@ paths:
     get:
       tags:
         - transaction
-      summary: Finds transaction by Id
-      description: Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing
+      summary: Find transaction by Id
+      description: Find a transaction by his transactionId
       parameters:
         - name: transactionId 
           in: path
@@ -102,7 +78,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Transactions'
         '400':
-          description: Invalid tag value
+          description: Invalid token supplied
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
       security:
         - petstore_auth:
             - write:pets
@@ -110,7 +90,7 @@ paths:
     put:
       tags:
         - transaction
-      summary: Update an information of an existing transaction
+      summary: Update a transaction
       description: Update an information of an existing transaction
       operationId: updateInfoTransaction
       parameters:
@@ -149,6 +129,8 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Transaction not found
+        '500':
+          description: Internal Server Error
       security:
         - api_key: []
         - petstore_auth:
@@ -157,7 +139,7 @@ paths:
     post:
       tags:
         - transaction
-      summary: Add a new information of a transaction
+      summary: Add a transaction
       description: Add a new information of a transaction
       operationId: addInfoTransaction
       parameters:
@@ -179,6 +161,8 @@ paths:
       responses:
         '405':
           description: Invalid input
+        '500':
+          description: Internal Server Error
       security:
         - petstore_auth:
             - write:pets
@@ -186,7 +170,7 @@ paths:
     delete:
       tags:
         - transaction
-      summary: Delete an information of a transaction
+      summary: Delete a transaction
       description: Delete an information of a transaction
       operationId: deleteInfoTransaction
       parameters:
@@ -207,7 +191,9 @@ paths:
               - Authorization -Attach Bearer JWT token
       responses:
         '400':
-          description: Invalid pet value
+          description: Invalid Id supplied
+        '500':
+          description: Internal Server Error
       security:
         - petstore_auth:
             - write:pets
@@ -215,53 +201,29 @@ paths:
   
 components:
   schemas:
-    
-    Name:
-      type: integer
-      format: int64
-      example: Argent Bank Checking (x8349)
-      xml:
-        name: Name
-    Amount:
-      type: integer
-      format: int64
-      example: $2,082.79
-      xml:
-        name: amount
-    Balance:
-      type: integer
-      format: int64
-      example: Available
-      xml:
-        name: balance
-    Id:
-      type: integer
-      format: int64
-      example: 15489
-      xml:
-        name: id
-    Date:
-      type: integer
-      format: int64
-      example: 20/12/2022
-      xml:
-        name: date
     Transactions:
-      required:
-        - name
-        - photoUrls
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/Id'
+          type: integer
+          format: int64
+          example: 15489
         Date:
-          $ref: '#/components/schemas/Date'
+          type: integer
+          format: int64
+          example: 20/12/2022
         Amount:
-          $ref: '#/components/schemas/Amount'
+          type: integer
+          format: int64
+          example: $2,082.79
         Name:
-          $ref: '#/components/schemas/Name'
+          type: integer
+          format: int64
+          example: Argent Bank Checking (x8349)
         Balance:
-          $ref: '#/components/schemas/Balance'
+          type: integer
+          format: int64
+          example: Available
   securitySchemes:
     petstore_auth:
       type: oauth2

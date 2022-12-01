@@ -50,8 +50,8 @@ function User() {
     
     
     return(
-        <div>
-            <main className="main bg-dark">
+        <>
+            <main className="main bg-dark correction">
                 <div className="header">
                     <h1>Welcome back<br /> {firstName} {lastName}!</h1>
                     <button className="edit-button" onClick={handleClick}>Edit Name</button>
@@ -72,7 +72,7 @@ function User() {
                         <button className="sign-in-button" onClick={handleLogin}>Save</button> 
                     </form>
             </section>
-        </div>
+        </>
     )
 }
 

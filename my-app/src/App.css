@@ -269,6 +269,10 @@ body {
   font-weight: normal;
 }
 
+.correction{
+  margin-top: -20px;
+}
+
 .account-content-wrapper {
   width: 100%;
   flex: 1;
