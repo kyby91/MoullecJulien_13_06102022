@@ -10,13 +10,6 @@ function Signin() {
     const [userPassword, setUserPassword] = useState('');
     const navigate = useNavigate()
 
-    // Recupere token dans le state
-
-    // useEffect()
-    //Si il y a le token navgete ver user
-     // 
-
-    // console.log(userEmail, userPassword);
     const {token} = useSelector((state) => state.user.user);
 
     useEffect( () => {  

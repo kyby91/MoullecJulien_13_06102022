@@ -54,7 +54,6 @@ export function fetchAPILogin(data){
   return async (dispatch, getState) => {
 
     const state = getState()
-    console.log(state.user.statut)
     if(!state.user.statut){
       return
     }
@@ -62,7 +61,6 @@ export function fetchAPILogin(data){
     try {
       const dataReponse = await axios.post('http://localhost:3001/api/v1/user/login', data)
   
-      console.log(dataReponse.data,  dataReponse.data.body.token);
     
       dispatch(login(dataReponse.data.body.token)) 
       
@@ -90,11 +88,9 @@ export function fetchAPIUserProfile(token){
         lastName : dataUser.data.body.lastName
       }
   
-      console.log(dataUser);
       dispatch(editProfile(payload)) 
     
     } catch (error) {
-      console.log(error);
     }
 
   } 
@@ -115,7 +111,6 @@ export function updateUserProfile(token, payload){
     }
 
     const response = await axios.put('http://localhost:3001/api/v1/user/profile', payload, config)
-    console.log(response);
     dispatch(changeName(payload))
   }
 }

@@ -10,16 +10,12 @@ import { useNavigate } from 'react-router-dom'
 function User() {
 
     const dispatch = useDispatch()
-    // const token = useSelector((state) =>state.user.user.token);
     const {token, firstName, lastName} = useSelector((state) => state.user.user);
 
-    console.log(firstName,lastName)
     const navigate = useNavigate()
 
 
-    // dispatch(userActions.fetchAPIUserProfile(token))
     useEffect( () => {
-        console.log(token)
         if(token){
             dispatch(userActions.fetchAPIUserProfile(token))
         }else {
@@ -36,7 +32,6 @@ function User() {
             "firstName": newName,
             "lastName": newLastName
         }
-        // dispatch(userActions.changeName(payload))
         dispatch(userActions.updateUserProfile(token, payload))
         setIsShown(current => !current);
     }

@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 function Banner() {
 
     const {token, logOut, firstName} = useSelector((state) => state.user.user);
-    console.log(firstName);
 
 
     return(

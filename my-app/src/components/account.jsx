@@ -1,8 +1,7 @@
-// import { Provider, useSelector } from "react-redux";
+
 
 function Account() {
 
-    // const users = useSelector((state) => state.user)
 
     return(
         <><section className="account">
